@@ -17,7 +17,7 @@ def read_data():
     return data
 
 
-def generate_bargraph():
+def calculation_of_pdf():
     """
 
 
@@ -98,11 +98,11 @@ def mean_function(xdst, ydst, wdst, cdst, data):
     print("PDF mean = ", xmean)
 
     # plotting the mean
-    text = ''' Mean value: {}'''.format(xmean.astype(int))
+    text = ''' Mean value: {}'''.format(xmean.astype(float).round(2))
     plt.plot([xmean, xmean], [0.0, max(ydst)], c='red', label=text)
 
 
-def distributions(xdst, ydst, wdst, cdst, data, oedge):
+def salary_below_33_percent(xdst, ydst, wdst, cdst, data, oedge):
     """
 
 
@@ -138,17 +138,18 @@ def distributions(xdst, ydst, wdst, cdst, data, oedge):
     indx = np.argmin(np.abs(cdst-0.33))
     xlow = oedge[indx]
     plt.bar(xdst[0:indx], ydst[0:indx], width=0.9*wdst[0:indx], color='green')
-    text = ''' 33% of claims are below £{}'''.format(xlow.astype(int))
+    text = ''' 33% of claims are below £{}'''.format(xlow.astype(float).round(2))
     plt.plot([xlow, xlow], [0.0, max(ydst)], c='black', label=text)
 
     plt.legend()
 
 
 # all functions call from the source
-xdst, ydst, wdst, cdst, oedge = generate_bargraph()
+xdst, ydst, wdst, cdst, oedge = calculation_of_pdf()
+print("xdst=",xdst,"ydst=",ydst)
 data = read_data()
 mean_function(xdst, ydst, wdst, cdst, data)
-distributions(xdst, ydst, wdst, cdst, data, oedge)
+salary_below_33_percent(xdst, ydst, wdst, cdst, data, oedge)
 # save figure
 plt.savefig("final_page.png", dpi=300)
 plt.show()
